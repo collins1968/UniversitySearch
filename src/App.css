@@ -1,11 +1,50 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+
+
+
+.container {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));*/
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  /* width: 30%; */
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+.container h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
 }
+
+.container p {
+  margin: 5px 0;
+}
+
+.container .label {
+  font-weight: bold;
+}
+
+.container .web-pages {
+  margin-top: 5px;
+}
+
+.container .web-pages a {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.clear-button {
+  margin-top: 10px;
+}
+
+.clear-button button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+

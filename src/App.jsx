@@ -3,130 +3,78 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-// function App() {
-//   const [country, setCountry] = useState('');
-//   // const [searchParam, setSearchParam] = useState('');
-//   const [universities, setUniversities] = useState([]);
-//   const [countries, setCountries] = useState([]);
-  
-// //   const fetchCountry = async () => { 
-// //     try {
-// //       // const response = await fetch(`http://universities.hipolabs.com/search?country=${searchParam}`)
-// //       const response = await fetch(`http://universities.hipolabs.com/search?country=${country}`)
-// //       const country = await response.json().then((data) => setCountries(data));
-
-// //       setCountry(response); 
-// //     } catch (error) {
-// //       console.log("error fetching data", error);
-// //     }
-// //   }
-
-// //   useEffect(() => {
-// //     fetchCountry();
-// //   }, [])
-
-// // const handleClear = () => {
-// //   setCountry('');
-// //   setUniversities([]);
-// // }
-
-// // const handleSearch = () => {
-// //   setUniversities([]);
-// //   if(country){
-// //     fetchCountry();
-// // }
-// //   }
-// useEffect(() => {
-//   fetch('http://universities.hipolabs.com/countries')
-//     .then((response) => response.json())
-//     .then((data) => setCountries(data))
-//     .catch((error) => console.log(error));
-// }, []);
-  
-// const handleSearch = () => {
-//     setUniversities([]);
-//     if (country) {
-//       fetch(`http://universities.hipolabs.com/search?country=${country}`)
-//         .then((response) => response.json())
-//         .then((data) => setUniversities(data))
-//         .catch((error) => console.log(error));
-//     }
-//   };
-
-  
-
-//   return (
-//     <div>
-//     <input type="text"
-//     value={country} 
-//      onChange={(e) => setCountry(e.target.value)} />
-//         <button onClick={handleSearch}>Add</button>
-//         {/* <button onClick={handleClear}>Clear</button> */}
-
-
-//         <h2>All University:</h2>
-//         {universities.length === 0 ?(
-//         <p>No University</p>) : (
-//           <ul>
-//           {universities.map((university) => (
-//             <li key={university.name}>
-//               {university.name}
-//             </li>)
-//             )}
-//         </ul>
-          
-//         )}
-//       {/* <ul>
-//         {countries.map((country) => (
-//           <li key={country.name}>{country.name}</li>
-//         ))}
-//       </ul> */}
-     
-      
-      
-//           </div>
-//         )       
-// }
-
-
-
 const App = () => {
+  // ...rest of the code
+  const [country, setCountry] = useState('');
   const [universities, setUniversities] = useState([]);
+  const [allUniversities, setAllUniversities] = useState([]);
 
-  useEffect(() => {
-    fetch('http://universities.hipolabs.com/search')
-      .then((response) => response.json())
-      .then((data) => setUniversities(data))
-      .catch((error) => console.log(error));
-  }, []);
-
-  const handleSearch = (country) => {
+  const handleSearch = () => {
     fetch(`http://universities.hipolabs.com/search?country=${country}`)
       .then((response) => response.json())
       .then((data) => setUniversities(data))
       .catch((error) => console.log(error));
   };
 
+  useEffect(() => {
+    fetch('http://universities.hipolabs.com/search')
+      .then((response) => response.json())
+      .then((data) => {
+        setUniversities(data);
+        setAllUniversities(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const handleClear = () => {
+    setCountry('');
+    setUniversities(allUniversities);
+  };
   return (
     <div>
+      <div className='search bar'>
       <input
         type="text"
         placeholder="Enter a country name"
-        onChange={(e) => handleSearch(e.target.value)}
+        value={country}
+        onChange={(e) => setCountry(e.target.value)}
       />
-      <button onClick={handleSearch}>Search</button>
-      <h2>All Universities:</h2>
-      <ul>
-        {universities.map((university) => (
-          <li key={university.name}>{university.name}</li>
-        ))}
-      </ul>
+      <button className='search' onClick={handleSearch}>Search</button>
+      <button onClick={handleClear} className="clear-button">
+        Clear
+      </button>
+      </div>
+     
+      <h2>All Universities: {universities.length}</h2>
+      {universities.map((university) => (
+        <div key={university.name} className="container">
+          <h3>{university.name}</h3>
+          <p>
+            <span className="label">Country:</span> {university.country}
+          </p>
+          <p>
+            <span className="label">Alpha Two Code:</span> {university.alpha_two_code}
+          </p>
+          <p>
+            <span className="label">Web Pages:</span>
+            <span className="web-pages">
+              {university.web_pages.map((webPage, index) => (
+                <a key={index} href={webPage} target="_blank" rel="noopener noreferrer">
+                  {webPage}
+                </a>
+              ))}
+            </span>
+          </p>
+          <p>
+            <span className="label">State/Province:</span> {university['state-province']}
+          </p>
+          <p>
+            <span className="label">Domains:</span> {university.domains.join(', ')}
+          </p>
+        </div>
+      ))}
     </div>
   );
 };
-
-
-
-
 
 export default App
