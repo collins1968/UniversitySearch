@@ -4,7 +4,6 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 const App = () => {
-  // ...rest of the code
   const [country, setCountry] = useState('');
   const [universities, setUniversities] = useState([]);
   const [allUniversities, setAllUniversities] = useState([]);
@@ -31,9 +30,10 @@ const App = () => {
     setUniversities(allUniversities);
   };
   return (
-    <div>
-      <div className='search bar'>
+    <div className='university'>
+      <div className='search-bar'>
       <input
+        className='bar'
         type="text"
         placeholder="Enter a country name"
         value={country}
