@@ -9,14 +9,16 @@ const App = () => {
   const [allUniversities, setAllUniversities] = useState([]);
 
   const handleSearch = () => {
-    fetch(`http://universities.hipolabs.com/search?country=${country}`)
+    // fetch(`http://universities.hipolabs.com/search?country=${country}`)
+    fetch(`https://universitiesapi.onrender.com/v1/api/universities/${country}`)
       .then((response) => response.json())
       .then((data) => setUniversities(data))
       .catch((error) => console.log(error));
   };
 
   useEffect(() => {
-    fetch('http://universities.hipolabs.com/search')
+    // fetch('http://universities.hipolabs.com/search')
+    fetch('https://universitiesapi.onrender.com/v1/api/universities/')
       .then((response) => response.json())
       .then((data) => {
         setUniversities(data);
@@ -68,9 +70,9 @@ const App = () => {
           <p>
             <span className="label">State/Province:</span> {university['state-province']}
           </p>
-          <p>
+          {/* <p>
             <span className="label">Domains:</span> {university.domains.join(', ')}
-          </p>
+          </p> */}
         </div>
       ))}
     </div>
